@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hauteur + largeur = labyrinthe</title>
+</head>
+
+<body>
+    <form action="./labyrinthe.html" method="GET" onsubmit="return validateForm()">
+        <div>
+            <label> Hauteur :
+                <input id='hauteur' name='hauteur' placeholder='Mettre la hauteur' />
+            </label>
+        </div>
+        <div>
+            <label>Largeur :
+                <input id='largeur' name='largeur' placeholder='Mettre la largeur' />
+            </label>
+        </div>
+        <div>
+            <button type="submit">Valider</button>
+        </div>
+    </form>
+    <script>
+        
+        //champs hauteur et largeur
+        let hauteur = document.getElementById('hauteur');
+        let largeur = document.getElementById('largeur');
+
+        //verification des champs si ils sont des interger
+        const validateForm =  () => {
+            if (Number(hauteur.value) && Number(largeur.value)) {
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+    </script>
+</body>
+
+</html>

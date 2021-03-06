@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>result labyrinthe</title>
+</head>
+
+<body>
+    <div>
+        <!--<table>
+            <tr>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+        </table>-->
+    </div>
+
+    <script>
+        //construction des elements
+        var body = document.getElementsByTagName('body')[0];
+        let table = document.createElement('table');
+        let tr = document.createElement('tr');
+
+        // parmater de table
+        table.style.width = '50%';
+        table.style.height = '500px';
+        table.setAttribute('border', '1');
+
+        //recuperatiopn des paramter de hauteur et largeur
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const hauteur = urlParams.get('hauteur')
+        console.log(hauteur);
+        const largeur = urlParams.get('largeur')
+        console.log(largeur);
+
+        let entree = 'E'
+        let sortie = 'S'
+
+        // construction du labyrinthe en tableau 2 dimensions
+        structureLabyrinthe = []
+
+        for (let i = 0; i < hauteur; i++) {
+            let test = [];
+
+            for (let j = 0; j < largeur; j++) {
+
+                if(j < largeur){
+                    test.push( Math.floor(Math.random()*2))
+                }   
+                //console.log(test)
+            }
+            structureLabyrinthe.push(test)
+        }
+
+        for (let i = 0; i < structureLabyrinthe.length; i++) {
+                //console.log(structureLabyrinthe[i])
+                let tr = document.createElement('tr');
+            for (let j = 0; j < structureLabyrinthe[i].length; j++) {
+                let td = document.createElement('td');
+                //console.log(structureLabyrinthe[i][j])
+                if(structureLabyrinthe[i][j] == 0){
+                    td.appendChild(document.createTextNode(''))
+                    td.style.backgroundColor = 'white';
+                    tr.appendChild(td)
+                }else{
+                    td.appendChild(document.createTextNode(''))
+                    td.style.backgroundColor = 'black';
+                    tr.appendChild(td)
+                }
+            }
+            table.appendChild(tr)
+        }
+
+        /*for (let i = 0; i < hauteur; i++) {
+            let tr = document.createElement('tr');
+            
+            for (let j = 0; j < largeur; j++) {
+
+                structureLabyrinthe.push([i,j])
+
+                let td = document.createElement('td');
+
+                if([i] == 2 || [i][j] == 4){
+                    
+                    td.appendChild(document.createTextNode(''))
+                    td.style.backgroundColor = 'black';
+                    tr.appendChild(td)
+                }
+            }
+            table.appendChild(tr)
+        }*/
+        body.appendChild(table)
+
+        console.log(structureLabyrinthe)
+
+    </script>
+
+</body>
+
+</html>
