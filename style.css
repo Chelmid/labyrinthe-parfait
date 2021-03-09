@@ -19,11 +19,7 @@ div#main_container {
 
 }
 
-div#controller_container {
-
-}
-
-div#maze_container {
+div#labyrinthe {
 
     width: 500px;
     height: 500px;

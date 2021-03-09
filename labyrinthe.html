@@ -12,126 +12,7 @@
 </head>
 
 <body>
-    <div>
-        <!--<table>
-            <tr>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>0</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-              </tr>
-        </table>-->
-    </div>
-
-    <!--<script>
-        //construction des elements
-        var body = document.getElementsByTagName('body')[0];
-        let table = document.createElement('table');
-        let tr = document.createElement('tr');
-
-        // parmater de table
-        table.style.width = '50%';
-        table.style.height = '500px';
-        table.setAttribute('border', '1');
-
-        //recuperatiopn des paramter de hauteur et largeur
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const hauteur = urlParams.get('hauteur')
-        console.log(hauteur);
-        const largeur = urlParams.get('largeur')
-        console.log(largeur);
-
-        let entree = 'E'
-        let sortie = 'S'
-
-        // construction du labyrinthe en tableau 2 dimensions
-        structureLabyrinthe = []
-        console.log((hauteur * (largeur + 1))-1, 'h')
-        console.log(((hauteur + 1) * largeur) -1, 'v')
-        for (let i = 0; i < hauteur; i++) {
-            let test = [];
-
-            for (let j = 0; j < largeur; j++) {
-
-                let unique = j + i * largeur
-
-                if(j < largeur){
-                    test.push(unique)
-                }   
-                //console.log(test)
-            }
-            structureLabyrinthe.push(test)
-        }
-
-        for (let i = 0; i < hauteur; i++) {
-
-
-            for (let j = 0; j < largeur; j++) {
-
-                if(j == 0 && i == 9 ){
-                    console.log(structureLabyrinthe[i][j])
-                }
-
-            }
-            
-        }
-
-
-
-        for (let i = 0; i < structureLabyrinthe.length; i++) {
-                //console.log(structureLabyrinthe[i])
-                let tr = document.createElement('tr');
-            for (let j = 0; j < structureLabyrinthe[i].length; j++) {
-                let td = document.createElement('td');
-                //console.log(structureLabyrinthe[i][j])
-                if(structureLabyrinthe[i][j] == 0){
-                    td.appendChild(document.createTextNode(''))
-                    td.style.backgroundColor = 'white';
-                    tr.appendChild(td)
-                }else{
-                    td.appendChild(document.createTextNode(''))
-                    td.style.backgroundColor = 'black';
-                    tr.appendChild(td)
-                }
-            }
-            table.appendChild(tr)
-        }
-        body.appendChild(table)
-
-        console.log(structureLabyrinthe)
-
-    </script>-->
+    <div id="labyrinthe"></div>
 
     <script>
 
@@ -142,11 +23,11 @@
         const largeur = urlParams.get('largeur')
 
         //taille du labyrinthe
-        var mazeWidth = largeur;
-        var mazeHeight = hauteur;
+        let mazeWidth = largeur;
+        let mazeHeight = hauteur;
 
         // initial du labyrinthe
-        window.addEventListener("load", init);        
+        window.addEventListener("load", init);
         function init() {
 
             createBlankMaze();
@@ -157,76 +38,48 @@
 
         function paint() {
 
-            var startAtRow = 1;
-            var startAtCol = 1;
+            let startAtRow = 1;
+            let startAtCol = 1;
 
-            var currentCell;
-
-            addRoute(startAtRow, startAtCol, false, "rgb(240, 0, 0)");
-
-            for (n = 1; n < (mazeWidth * mazeHeight) - 1; n++) {
-
-                var currentCell = document.getElementById("cell_" + startAtRow + "_" + startAtCol);
-
-                if (currentCell.getAttribute("occupied") == "true") {
-
-                    addRoute(startAtRow, startAtCol, true, "rgb(240, 120, 0)");
-
-                }
-
-                if (startAtCol == mazeWidth) {
-
-                    startAtRow++;
-                    startAtCol = 1;
-
-                } else {
-
-                    startAtCol++;
-
-                }
-
-            }
+            addRoute(startAtRow, startAtCol, false, /*"rgb(255, 255, 255)"*/);
 
         }
 
         function addRoute(startAtRow, startAtCol, createDetour, backgroundColorRoute) {
 
-            var validExits = ["right", "bottom", "left", "top"];
 
-            var remainingExits = { "right": mazeWidth, "bottom": mazeHeight, "left": 0, "top": 0 };
+            let validExits = ["right", "bottom", "left", "top"];
 
-            var nextExits = [];
+            let remainingExits = { "right": 1 + startAtRow + startAtCol * (mazeWidth + 1), "bottom": startAtRow + (startAtCol+1) * mazeWidth, "left":  startAtRow + startAtCol * (mazeWidth+1), "top":  startAtRow + startAtCol * mazeWidth};
 
-            var lastCells = [];
+            let nextExits = [];
 
-            var rowIndex = startAtRow;
+            let lastCells = [];
 
-            var colIndex = startAtCol;
+            let rowIndex = startAtRow;
 
-            var currentCell = document.getElementById("cell_" + rowIndex + "_" + colIndex);
+            let colIndex = startAtCol;
 
-            var exit;
+            let currentCell = document.getElementById("cell_" + rowIndex + "_" + colIndex);
 
-            var lastExit;
+            let exit;
 
-            var exitIndex;
+            let lastExit;
 
-            var loop = 0;
+            let exitIndex;
 
-            var loopFuse = 0;
+            let loop = 0;
 
-            var maxLoops = 3 * mazeWidth * mazeHeight;
+            let maxLoops = 3 * mazeWidth * mazeHeight;
 
-            var nextPossibleCell;
+            let nextPossibleCell;
 
             while (loop < ((mazeWidth * mazeHeight) - 1)) {
 
-                loopFuse++;
-
-                if (loopFuse >= maxLoops) { break; }
 
                 nextExits = [];
 
+                // possblilité de la cellule suivant
                 for (i = 0; i < validExits.length; i++) {
 
                     switch (validExits[i]) {
@@ -248,7 +101,7 @@
                             break;
 
                     }
-
+                    
                     if (nextPossibleCell != null) {
 
                         if (nextPossibleCell.getAttribute("occupied") != "true") {
@@ -274,10 +127,11 @@
 
                     } else {
 
-                        lastCells.splice(lastCells.length - 1, 1);
-
+                        lastCells.splice(lastCells.length-1, 1);
+                        
                         rowIndex = lastCells[lastCells.length - 1][0];
                         colIndex = lastCells[lastCells.length - 1][1];
+                        
                         currentCell = document.getElementById("cell_" + rowIndex + "_" + colIndex);
 
                         continue;
@@ -289,7 +143,7 @@
                 exitIndex = Math.floor(Math.random() * Math.floor(nextExits.length));
 
                 exit = nextExits[exitIndex];
-
+                
                 if (createDetour == false) {
 
                     currentCell.style["border-" + exit] = "none";
@@ -309,29 +163,29 @@
                     case "right":
 
                         colIndex = colIndex + 1;
-                        remainingExits.left++;
-                        remainingExits.right--;
+                        /*remainingExits.left++;
+                        remainingExits.right--;*/
                         break;
 
                     case "bottom":
 
                         rowIndex = rowIndex + 1;
-                        remainingExits.top++;
-                        remainingExits.bottom--;
+                        /*remainingExits.top++;
+                        remainingExits.bottom--;*/
                         break;
 
                     case "left":
 
                         colIndex = colIndex - 1;
-                        remainingExits.left--;
-                        remainingExits.right++;
+                        /*remainingExits.left--;
+                        remainingExits.right++;*/
                         break;
 
                     case "top":
 
                         rowIndex = rowIndex - 1;
-                        remainingExits.top--;
-                        remainingExits.bottom++;
+                        /*remainingExits.top--;
+                        remainingExits.bottom++;*/
                         break;
 
                 }
@@ -381,55 +235,49 @@
 
         }
 
-
-
         function createBlankMaze() {
 
-var rowIndex, colIndex;
+            let rowIndex, colIndex;
 
-var table = document.createElement("table");
-var tbody = document.createElement("tbody");
+            let table = document.createElement("table");
+            let tbody = document.createElement("tbody");
 
-for (rowIndex = 1; rowIndex <= mazeHeight; rowIndex++) {
+            for (rowIndex = 0; rowIndex <= mazeHeight - 1; rowIndex++) {
 
-    var row = document.createElement("tr");
+                let row = document.createElement("tr");
 
-    for (colIndex = 1; colIndex <= mazeWidth; colIndex++) {
+                for (colIndex = 0; colIndex <= mazeWidth - 1; colIndex++) {
 
-        var col = document.createElement("td");
-        if (rowIndex == 1 && colIndex == 1) {
+                    let col = document.createElement("td");
 
-            col.style.backgroundColor = "rgb(244,0,0)";
-            col.setAttribute("type", "start");
+                    if (rowIndex == 0 && colIndex == 0) {
 
-        } else if (rowIndex == mazeHeight && colIndex == mazeWidth) {
+                        col.style.backgroundColor = "rgb(255,0,0)";
+                        col.setAttribute("type", "start");
 
-            col.style.backgroundColor = "rgb(0,244,0)";
-            col.setAttribute("type", "finish");
+                    } else if (rowIndex == mazeHeight-1 && colIndex == mazeWidth-1) {
+                        
+                        col.style.backgroundColor = "rgb(0,244,0)";
+                        col.setAttribute("type", "finish");
 
-        } else {
+                    }
 
-            col.style.backgroundColor = "rgb(255,255,255)";
+                    col.setAttribute("id", "cell_" + rowIndex + "_" + colIndex);
+
+                    row.appendChild(col);
+
+                }
+
+                tbody.appendChild(row);
+
+            }
+
+            table.appendChild(tbody);
+
+            document.getElementById("labyrinthe").appendChild(table);
 
         }
-        col.setAttribute("id", "cell_" + rowIndex + "_" + colIndex);
-
-        row.appendChild(col);
-
-    }
-
-    tbody.appendChild(row);
-
-}
-
-table.appendChild(tbody);
-
-document.getElementById("maze_container").appendChild(table);
-
-}
     </script>
-
-    <div id="maze_container" style="overflow-wrap: break-word; line-height: 14px; letter-spacing: -2px;"></div>
 </body>
 
 </html>
