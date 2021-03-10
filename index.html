@@ -31,12 +31,9 @@
         let largeur = document.getElementById('largeur');
 
         //verification des champs si ils sont des interger
-        const validateForm =  () => {
-            if (Number(hauteur.value) && Number(largeur.value)) {
-                return true;
-            }else{
-                return false;
-            }
+        const validateForm = () => {
+            (Number(hauteur.value) && Number(largeur.value)) ? true : false;
+
         }
 
     </script>
