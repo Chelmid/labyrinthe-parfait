@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>hauteur et largeur du labyrinthe</title>
+    <title>hauteur + largeur = labyrinthe</title>
 </head>
 
 <body>
@@ -24,19 +24,7 @@
             <button type="submit">Valider</button>
         </div>
     </form>
-    <script>
-        
-        //champs hauteur et largeur
-        let hauteur = document.getElementById('hauteur');
-        let largeur = document.getElementById('largeur');
-
-        //verification des champs si ils sont des interger
-        const validateForm = () => {
-            (Number(hauteur.value) && Number(largeur.value)) ? true : false;
-
-        }
-
-    </script>
+    <script src="./asset/js/valideteForm.js"></script>
 </body>
 
 </html>
