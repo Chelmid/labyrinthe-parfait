@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="./style.css">
 
-    <title>result labyrinthe</title>
+    <title>labyrinthe</title>
 </head>
 
 <body>
@@ -41,7 +41,7 @@
             let startAtRow = 1;
             let startAtCol = 1;
 
-            addRoute(startAtRow, startAtCol, false, /*"rgb(255, 255, 255)"*/);
+            addRoute(startAtRow, startAtCol);
 
         }
 
@@ -50,9 +50,12 @@
 
             let validExits = ["right", "bottom", "left", "top"];
 
-            let remainingExits = { "right": 1 + startAtRow + startAtCol * (mazeWidth + 1), "bottom": startAtRow + (startAtCol+1) * mazeWidth, "left":  startAtRow + startAtCol * (mazeWidth+1), "top":  startAtRow + startAtCol * mazeWidth};
-
-            let nextExits = [];
+            let remainingExits = {
+                "right": 1 + startAtRow + startAtCol * (mazeWidth + 1),
+                "bottom": startAtRow + (startAtCol + 1) * mazeWidth,
+                "left": startAtRow + startAtCol * (mazeWidth + 1),
+                "top": startAtRow + startAtCol * mazeWidth
+            };
 
             let lastCells = [];
 
@@ -64,20 +67,15 @@
 
             let exit;
 
-            let lastExit;
-
             let exitIndex;
 
             let loop = 0;
-
-            let maxLoops = 3 * mazeWidth * mazeHeight;
 
             let nextPossibleCell;
 
             while (loop < ((mazeWidth * mazeHeight) - 1)) {
 
-
-                nextExits = [];
+                let nextExits = [];
 
                 // possblilité de la cellule suivant
                 for (i = 0; i < validExits.length; i++) {
@@ -101,7 +99,7 @@
                             break;
 
                     }
-                    
+
                     if (nextPossibleCell != null) {
 
                         if (nextPossibleCell.getAttribute("occupied") != "true") {
@@ -120,72 +118,48 @@
 
                 if (nextExits.length == 0) {
 
-                    if (createDetour == true) {
+                    lastCells.splice(lastCells.length - 1, 1);
 
-                        return false;
+                    rowIndex = lastCells[lastCells.length - 1][0];
+                    colIndex = lastCells[lastCells.length - 1][1];
 
+                    currentCell = document.getElementById("cell_" + rowIndex + "_" + colIndex);
 
-                    } else {
-
-                        lastCells.splice(lastCells.length-1, 1);
-                        
-                        rowIndex = lastCells[lastCells.length - 1][0];
-                        colIndex = lastCells[lastCells.length - 1][1];
-                        
-                        currentCell = document.getElementById("cell_" + rowIndex + "_" + colIndex);
-
-                        continue;
-
-                    }
+                    continue;
 
                 }
 
+                //generateur de mur
                 exitIndex = Math.floor(Math.random() * Math.floor(nextExits.length));
 
                 exit = nextExits[exitIndex];
-                
-                if (createDetour == false) {
+
+                if (!(exit == "right" && colIndex == mazeWidth - 1 && rowIndex == mazeHeight) &&
+                    !(exit == "bottom" && colIndex == mazeWidth && rowIndex == mazeHeight - 1)) {
 
                     currentCell.style["border-" + exit] = "none";
 
-                } else {
-
-                    if (!(exit == "right" && colIndex == mazeWidth - 1 && rowIndex == mazeHeight) &&
-                        !(exit == "bottom" && colIndex == mazeWidth && rowIndex == mazeHeight - 1)) {
-
-                        currentCell.style["border-" + exit] = "none";
-
-                    }
                 }
 
                 switch (exit) {
 
                     case "right":
-
                         colIndex = colIndex + 1;
-                        /*remainingExits.left++;
-                        remainingExits.right--;*/
                         break;
 
                     case "bottom":
 
                         rowIndex = rowIndex + 1;
-                        /*remainingExits.top++;
-                        remainingExits.bottom--;*/
                         break;
 
                     case "left":
 
                         colIndex = colIndex - 1;
-                        /*remainingExits.left--;
-                        remainingExits.right++;*/
                         break;
 
                     case "top":
 
                         rowIndex = rowIndex - 1;
-                        /*remainingExits.top--;
-                        remainingExits.bottom++;*/
                         break;
 
                 }
@@ -224,10 +198,7 @@
 
                 }
 
-                currentCell.style.backgroundColor = backgroundColorRoute;
                 currentCell.setAttribute("occupied", "true");
-
-                lastExit = exit;
 
                 loop++;
 
@@ -255,8 +226,8 @@
                         col.style.backgroundColor = "rgb(255,0,0)";
                         col.setAttribute("type", "start");
 
-                    } else if (rowIndex == mazeHeight-1 && colIndex == mazeWidth-1) {
-                        
+                    } else if (rowIndex == mazeHeight - 1 && colIndex == mazeWidth - 1) {
+
                         col.style.backgroundColor = "rgb(0,244,0)";
                         col.setAttribute("type", "finish");
 
