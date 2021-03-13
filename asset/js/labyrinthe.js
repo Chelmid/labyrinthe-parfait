@@ -4,6 +4,11 @@ const urlParams = new URLSearchParams(queryString);
 const hauteur = urlParams.get('hauteur')
 const largeur = urlParams.get('largeur')
 
+//control des dimension
+if(hauteur > 100 || largeur > 100){
+    location.href = 'index.html'
+}
+
 //taille du labyrinthe
 let mazeWidth = largeur;
 let mazeHeight = hauteur;
@@ -13,17 +18,18 @@ window.addEventListener("load", init);
 function init() {
 
     createMaze();
-    draw();
+    constructionMaze();
     return;
 
 }
 
-function draw() {
+//construction du labyrinthe
+function constructionMaze() {
 
-    let startAtRow = 0;
-    let startAtCol = 0;
+    let startRow = 0;
+    let startCol = 0;
 
-    addRoute(startAtRow, startAtCol);
+    wallsAndRoutes(startRow, startCol);
     return;
 
 }
@@ -66,32 +72,25 @@ function createMaze() {
     return;
 }
 
-function addRoute(startAtRow, startAtCol) {
+//generateur du labyrinthe
+function wallsAndRoutes(startRow, startCol) {
 
-    let choices = ["right", "bottom", "left", "top"];
-
-    /*let remainingExits = {
-        "right": 1 + startAtRow + startAtCol * (mazeWidth + 1),
-        "bottom": startAtRow + (startAtCol + 1) * mazeWidth,
-        "left": startAtRow + startAtCol * (mazeWidth + 1),
-        "top": startAtRow + startAtCol * mazeWidth
-    };*/
-
+    let directions = ["right", "bottom", "left", "top"];
     let lastCells = [];
-    let rowIndex = startAtRow;
-    let colIndex = startAtCol;
-    let loop = 0;
+    let rowIndex = startRow;
+    let colIndex = startCol;
+    let size = 0;
 
-    while (loop < ((mazeHeight * mazeWidth) - 1)) {
+    while (size < ((mazeHeight * mazeWidth) - 1)) {
 
-        let nextExits = []
-        let currentCell = document.getElementById("cell_" + rowIndex + "_" + colIndex);
+        let choicesDirection = []
+        let nowCell = document.getElementById("cell_" + rowIndex + "_" + colIndex);
         let nextPossibleCell;
 
         // la possblilité de la cellules pour la suivants
-        for (i = 0; i < choices.length; i++) {
+        for (i = 0; i < directions.length; i++) {
 
-            switch (choices[i]) {
+            switch (directions[i]) {
 
                 case "right":
                     nextPossibleCell = document.getElementById("cell_" + rowIndex + "_" + (colIndex + 1));
@@ -115,14 +114,14 @@ function addRoute(startAtRow, startAtCol) {
 
                 if (nextPossibleCell.getAttribute("occupied") != "true") {
 
-                    nextExits.push(choices[i]);
+                    choicesDirection.push(directions[i]);
                 }
             }
 
         }
 
-        // possibilité du chemin vers la sortir
-        if (nextExits.length == undefined || nextExits.length == 0) {
+        // sortir de l'impasse
+        if (choicesDirection.length == undefined || choicesDirection.length == 0) {
 
             lastCells.splice(lastCells.length - 1, 1);
             rowIndex = lastCells[lastCells.length - 1][0];
@@ -132,20 +131,19 @@ function addRoute(startAtRow, startAtCol) {
         }
 
         // le choix de la cellule suivant
-        let IndexRadom = Math.floor(Math.random() * Math.floor(nextExits.length));
-        let exit = nextExits[IndexRadom];
-        console.log(nextExits[IndexRadom])
+        let IndexRandom = Math.floor(Math.random() * Math.floor(choicesDirection.length));
+        let goDirection = choicesDirection[IndexRandom];
 
         //cellule sortir pour les mur
-        if (!(exit == "right" && colIndex == mazeWidth - 1 && rowIndex == mazeHeight) &&
-            !(exit == "bottom" && colIndex == mazeWidth && rowIndex == mazeHeight - 1)) {
+        if (!(goDirection == "right" && colIndex == mazeWidth - 1 && rowIndex == mazeHeight) &&
+            !(goDirection == "bottom" && colIndex == mazeWidth && rowIndex == mazeHeight - 1)) {
 
-            currentCell.style["border-" + exit] = "none";
+            nowCell.style["border-" + goDirection] = "none";
 
         }
 
         //nouvelle position de la cellule
-        switch (exit) {
+        switch (goDirection) {
 
             case "right":
                 colIndex = colIndex + 1;
@@ -170,35 +168,35 @@ function addRoute(startAtRow, startAtCol) {
 
         lastCells.push([rowIndex, colIndex]);
 
-        currentCell = document.getElementById("cell_" + rowIndex + "_" + colIndex);
+        nowCell = document.getElementById("cell_" + rowIndex + "_" + colIndex);
 
         // effacer les murs
-        switch (exit) {
+        switch (goDirection) {
 
             case "right":
 
-                currentCell.style["border-left"] = "none";
+                nowCell.style["border-left"] = "none";
                 break;
 
             case "bottom":
 
-                currentCell.style["border-top"] = "none";
+                nowCell.style["border-top"] = "none";
                 break;
 
             case "left":
 
-                currentCell.style["border-right"] = "none";
+                nowCell.style["border-right"] = "none";
                 break;
 
             case "top":
 
-                currentCell.style["border-bottom"] = "none";
+                nowCell.style["border-bottom"] = "none";
                 break;
 
         }
 
-        currentCell.setAttribute("occupied", "true");
-        loop++;
+        nowCell.setAttribute("occupied", "true");
+        size++;
 
     }
     return;

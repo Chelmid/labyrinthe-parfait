@@ -8,6 +8,15 @@ html, body  {
     position: absolute ;
 }
 
+div.parameters {
+    display: grid;
+    justify-content: center;
+}
+
+div#messageError {
+    color: red
+}
+
 div#main_container {
     
     margin-top: 50px;

@@ -5,26 +5,43 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="./asset/css/style.css">
+
     <title>hauteur + largeur = labyrinthe</title>
 </head>
 
 <body>
     <form action="./labyrinthe.html" method="GET" onsubmit="return validateForm()">
-        <div>
-            <label> Hauteur :
-                <input id='hauteur' name='hauteur' placeholder='Mettre la hauteur' />
-            </label>
+        <div id="mocha"></div>
+        <div class='parameters'>
+            <h1>Labyrinthe</h1>
+            <div id='messageError'></div>
+            <div>
+                <label> Hauteur :
+                    <input id='hauteur' name='hauteur' placeholder='Mettre la hauteur' />
+                </label>
+            </div>
+            <div>
+                <label>Largeur :
+                    <input id='largeur' name='largeur' placeholder='Mettre la largeur' />
+                </label>
+            </div>
+            <div>
+                <button type="submit">Valider</button>
+            </div>
         </div>
-        <div>
-            <label>Largeur :
-                <input id='largeur' name='largeur' placeholder='Mettre la largeur' />
-            </label>
-        </div>
-        <div>
-            <button type="submit">Valider</button>
-        </div>
+
     </form>
+    <script src="https://unpkg.com/chai/chai.js"></script>
+    <script src="https://unpkg.com/mocha/mocha.js"></script>
+    <script>mocha.setup('bdd')</script>
     <script src="./asset/js/valideteForm.js"></script>
+    <script src="./asset/js/test/test.ValideteForm.js"></script>
+    <script>
+        mocha.checkLeaks();    
+        mocha.run();
+    </script>
 </body>
 
 </html>
