@@ -5,8 +5,16 @@ const hauteur = urlParams.get('hauteur')
 const largeur = urlParams.get('largeur')
 
 //control des dimension
-if(hauteur > 100 || largeur > 100){
-    location.href = 'index.html'
+function checkParams(hauteur,largeur){
+
+    let h = parseInt(hauteur, 10);
+    let l = parseInt(largeur, 10);
+
+    if(h > 100 || l > 100 || isNaN(h) === true || isNaN(l) === true){
+        //location.href = 'index.html'
+        return false;
+    }
+
 }
 
 //taille du labyrinthe
@@ -16,6 +24,8 @@ let mazeHeight = hauteur;
 // initial du labyrinthe
 window.addEventListener("load", init);
 function init() {
+    
+    checkParams(hauteur,largeur)
 
     createMaze();
     constructionMaze();

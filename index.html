@@ -12,8 +12,9 @@
 </head>
 
 <body>
+    <div id="mocha"></div>
     <form action="./labyrinthe.html" method="GET" onsubmit="return validateForm()">
-        <div id="mocha"></div>
+
         <div class='parameters'>
             <h1>Labyrinthe</h1>
             <div id='messageError'></div>
@@ -36,12 +37,11 @@
     <script src="https://unpkg.com/chai/chai.js"></script>
     <script src="https://unpkg.com/mocha/mocha.js"></script>
     <script>mocha.setup('bdd')</script>
-    <script src="./asset/js/valideteForm.js"></script>
-    <script src="./asset/js/test/test.ValideteForm.js"></script>
+    <script src="./asset/js/test/test.ValidateForm.js"></script>
     <script>
-        mocha.checkLeaks();    
         mocha.run();
     </script>
+    <script src="./asset/js/validateForm.js"></script>
 </body>
 
 </html>
