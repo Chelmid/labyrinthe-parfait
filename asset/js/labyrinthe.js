@@ -7,12 +7,13 @@ const largeur = urlParams.get('largeur')
 //control des dimension
 function checkParams(hauteur,largeur){
 
-    let h = parseInt(hauteur, 10);
-    let l = parseInt(largeur, 10);
+    //let h = parseInt(hauteur, 10);
+    //let l = parseInt(largeur, 10);
 
-    if(h > 100 || l > 100 || isNaN(h) === true || isNaN(l) === true){
+    if(hauteur > 100 || largeur > 100 && isNaN(hauteur) == true || isNaN(largeur) == true){
+        //activer la test 
         //location.href = 'index.html'
-        return false;
+        return true
     }
 
 }
@@ -25,8 +26,7 @@ let mazeHeight = hauteur;
 window.addEventListener("load", init);
 function init() {
     
-    checkParams(hauteur,largeur)
-
+    checkParams(hauteur,largeur);
     createMaze();
     constructionMaze();
     return;
