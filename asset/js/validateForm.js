@@ -6,11 +6,11 @@ let messageError = document.getElementById('messageError');
 //verification des champs si ils sont des interger
 function validateForm() {
 
-    if (isNaN(hauteur.value) === true) {
+    if (isNaN(hauteur.value)) {
         messageError.innerHTML = "la hauteur ou la largeur n'est pas un nombre"
         return false;
     }
-    if (isNaN(largeur.value) === true) {
+    if (isNaN(largeur.value)) {
         messageError.innerHTML = "la largeur ou la hauteur n'est pas un nombre"
         return false;
     }

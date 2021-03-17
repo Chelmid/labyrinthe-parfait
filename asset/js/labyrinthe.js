@@ -5,13 +5,10 @@ const hauteur = urlParams.get('hauteur')
 const largeur = urlParams.get('largeur')
 
 //control des dimension
-function checkParams(hauteur,largeur){
+function checkParams(hauteur, largeur) {
 
-    //let h = parseInt(hauteur, 10);
-    //let l = parseInt(largeur, 10);
-
-    if(hauteur > 100 || largeur > 100 && isNaN(hauteur) == true || isNaN(largeur) == true){
-        //activer la test 
+    if (hauteur > 100 || largeur > 100 && isNaN(hauteur) == true || isNaN(largeur) == true) {
+        //enlever pour le test 
         //location.href = 'index.html'
         return true
     }
@@ -25,8 +22,8 @@ let mazeHeight = hauteur;
 // initial du labyrinthe
 window.addEventListener("load", init);
 function init() {
-    
-    checkParams(hauteur,largeur);
+
+    checkParams(hauteur, largeur);
     createMaze();
     constructionMaze();
     return;
@@ -130,16 +127,6 @@ function wallsAndRoutes(startRow, startCol) {
 
         }
 
-        // sortir de l'impasse
-        if (choicesDirection.length == undefined || choicesDirection.length == 0) {
-
-            lastCells.splice(lastCells.length - 1, 1);
-            rowIndex = lastCells[lastCells.length - 1][0];
-            colIndex = lastCells[lastCells.length - 1][1];
-            continue;
-
-        }
-
         // le choix de la cellule suivant
         let IndexRandom = Math.floor(Math.random() * Math.floor(choicesDirection.length));
         let goDirection = choicesDirection[IndexRandom];
@@ -177,6 +164,16 @@ function wallsAndRoutes(startRow, startCol) {
         }
 
         lastCells.push([rowIndex, colIndex]);
+
+        //les derniers cellules visités
+        if (choicesDirection.length == undefined || choicesDirection.length == 0 || choicesDirection != '') {
+
+            lastCells.splice(lastCells.length - 1, 1);
+            rowIndex = lastCells[lastCells.length - 1][0];
+            colIndex = lastCells[lastCells.length - 1][1];
+            continue;
+
+        }
 
         nowCell = document.getElementById("cell_" + rowIndex + "_" + colIndex);
 

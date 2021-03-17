@@ -1,3 +1,5 @@
+//les test pour le fichier index
+
 describe('errorForm', () => {
   it('should from content error return false', () => {
     chai.expect(validateForm()).to.equal(false);
