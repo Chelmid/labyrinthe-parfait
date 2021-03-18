@@ -165,12 +165,14 @@ function wallsAndRoutes(startRow, startCol) {
 
         lastCells.push([rowIndex, colIndex]);
 
-        //les derniers cellules visités
-        if (choicesDirection.length == undefined || choicesDirection.length == 0 || choicesDirection != '') {
+        //derniers cellules visités
+        if (choicesDirection.length == undefined || choicesDirection.length == 0) {
 
             lastCells.splice(lastCells.length - 1, 1);
             rowIndex = lastCells[lastCells.length - 1][0];
             colIndex = lastCells[lastCells.length - 1][1];
+
+            console.log(lastCells[lastCells.length - 1][0], lastCells[lastCells.length - 1][1], lastCells.splice(lastCells.length - 1, 1));
             continue;
 
         }

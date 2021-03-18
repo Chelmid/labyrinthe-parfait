@@ -17,10 +17,7 @@ describe('checkParams', () => {
 
 describe('Labyrinthe', () => {
 
-    it('should params return false and redirect', (done) => {
-        chai.expect(wallsAndRoutes(1,1)).to.equal();
-        done();
-        //chai.expect(createMaze()).to.equal();
-        //chai.expect(constructionMaze()).to.equal();
+    it('should labyrinthe return', () => {
+
     });
 });
