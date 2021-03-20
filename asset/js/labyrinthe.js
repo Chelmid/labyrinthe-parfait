@@ -9,7 +9,7 @@ function checkParams(hauteur, largeur) {
 
     if (hauteur > 100 || largeur > 100 && isNaN(hauteur) == true || isNaN(largeur) == true) {
         //enlever pour le test 
-        //location.href = 'index.html'
+        location.href = 'index.html'
         return true
     }
 
